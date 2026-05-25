@@ -10,6 +10,7 @@ import leadRoutes from "./routes/leadRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import helmet from "helmet";                         
 import sitemapRoute from "./routes/sitemapRoutes.js";
+import certificateRoutes from "./routes/certificateRoutes.js";
 
 connectDB();
 
@@ -37,6 +38,8 @@ app.use("/api", leadRoutes);
 
 // 🔴 ADMIN
 app.use("/api/admin", adminRoutes);
+
+app.use("/api/certificates", certificateRoutes);
 
 // 🧪 test route
 app.get("/api/test", (req, res) => {
