@@ -11,6 +11,10 @@ const certificateSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    nameType: {
+      type: String,
+      default: "Father",
+    },
 
     enrollmentNumber: {
       type: String,

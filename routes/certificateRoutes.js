@@ -19,8 +19,8 @@ router.post("/", addCertificate);
 router.get("/", getCertificates);
 
 
-// VERIFY CERTIFICATE
-router.get("/:enrollment", verifyCertificate);
+// VERIFY CERTIFICATE — year aur number alag params me
+router.get("/verify/:year/:number", verifyCertificate);
 
 
 // UPDATE CERTIFICATE

@@ -114,8 +114,10 @@ export const verifyCertificate =
 
     try {
 
-      const { enrollment } =
-        req.params;
+      // year aur number alag params — RJ/25/6582 banta hai
+      const { year, number } = req.params;
+      const fullYear = year.length === 2 ? `20${year}` : year;
+      const enrollment = `RJ/${fullYear}/${number}`;
 
       const certificate =
         await Certificate.findOne({
