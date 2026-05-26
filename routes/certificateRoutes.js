@@ -1,68 +1,34 @@
 import express from "express";
 
-import Certificate from "../models/Certificate.js";
+import {
+  addCertificate,
+  verifyCertificate,
+  getCertificates,
+  deleteCertificate,
+  updateCertificate,
+} from "../controllers/certificateController.js";
 
 const router = express.Router();
 
 
 // ADD CERTIFICATE
-router.post("/", async (req, res) => {
+router.post("/", addCertificate);
 
-  try {
 
-    const certificate = await Certificate.create(
-      req.body
-    );
-
-    res.status(201).json({
-      success: true,
-      data: certificate,
-    });
-
-  } catch (error) {
-
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-
-  }
-});
+// GET ALL CERTIFICATES
+router.get("/", getCertificates);
 
 
 // VERIFY CERTIFICATE
-router.get("/:enrollment", async (req, res) => {
+router.get("/:enrollment", verifyCertificate);
 
-  try {
 
-    const certificate =
-      await Certificate.findOne({
-        enrollmentNumber:
-          req.params.enrollment,
-      });
+// UPDATE CERTIFICATE
+router.put("/:id", updateCertificate);
 
-    if (!certificate) {
 
-      return res.status(404).json({
-        success: false,
-        message: "Certificate not found",
-      });
+// DELETE CERTIFICATE
+router.delete("/:id", deleteCertificate);
 
-    }
-
-    res.json({
-      success: true,
-      data: certificate,
-    });
-
-  } catch (error) {
-
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-
-  }
-});
 
 export default router;

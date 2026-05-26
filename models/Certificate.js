@@ -28,17 +28,17 @@ const certificateSchema = new mongoose.Schema(
       required: true,
     },
 
-    grade: {
+    internship: {
       type: String,
-      required: true,
+      default: "No",
+    },
+
+    internshipDuration: {
+      type: String,
+      default: "N/A",
     },
 
     issueDate: {
-      type: String,
-      required: true,
-    },
-
-    serialNumber: {
       type: String,
       required: true,
     },

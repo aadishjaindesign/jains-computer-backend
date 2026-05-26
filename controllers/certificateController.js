@@ -12,38 +12,56 @@ export const addCertificate = async (req, res) => {
       enrollmentNumber,
       course,
       duration,
-      grade,
+      internship,
+      internshipDuration,
       issueDate,
-      serialNumber,
     } = req.body;
 
     // CHECK EXIST
-    const alreadyExist = await Certificate.findOne({
-      enrollmentNumber,
-    });
+    const alreadyExist =
+      await Certificate.findOne({
+        enrollmentNumber,
+      });
 
     if (alreadyExist) {
+
       return res.status(400).json({
         success: false,
-        message: "Enrollment number already exists",
+        message:
+          "Enrollment number already exists",
       });
     }
 
-    const certificate = await Certificate.create({
-      studentName,
-      fatherName,
-      enrollmentNumber,
-      course,
-      duration,
-      grade,
-      issueDate,
-      serialNumber,
-    });
+    const certificate =
+      await Certificate.create({
+
+        studentName,
+
+        fatherName,
+
+        enrollmentNumber,
+
+        course,
+
+        duration,
+
+        internship,
+
+        internshipDuration,
+
+        issueDate,
+
+      });
 
     res.status(201).json({
+
       success: true,
-      message: "Certificate added successfully",
+
+      message:
+        "Certificate added successfully",
+
       data: certificate,
+
     });
 
   } catch (error) {
@@ -57,39 +75,161 @@ export const addCertificate = async (req, res) => {
 
   }
 };
+
+
+// GET ALL CERTIFICATES
+export const getCertificates =
+  async (req, res) => {
+
+    try {
+
+      const certificates =
+        await Certificate.find()
+          .sort({ createdAt: -1 });
+
+      res.status(200).json({
+
+        success: true,
+
+        data: certificates,
+
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+      res.status(500).json({
+        success: false,
+        message: "Server Error",
+      });
+
+    }
+  };
 
 
 // VERIFY CERTIFICATE
-export const verifyCertificate = async (req, res) => {
+export const verifyCertificate =
+  async (req, res) => {
 
-  try {
+    try {
 
-    const { enrollment } = req.params;
+      const { enrollment } =
+        req.params;
 
-    const certificate = await Certificate.findOne({
-      enrollmentNumber: enrollment,
-    });
+      const certificate =
+        await Certificate.findOne({
 
-    if (!certificate) {
-      return res.status(404).json({
-        success: false,
-        message: "Certificate not found",
+          enrollmentNumber: {
+            $regex: enrollment,
+            $options: "i",
+          },
+
+        });
+
+      if (!certificate) {
+
+        return res.status(404).json({
+
+          success: false,
+
+          message:
+            "Certificate not found",
+
+        });
+      }
+
+      res.status(200).json({
+
+        success: true,
+
+        data: certificate,
+
       });
+
+    } catch (error) {
+
+      console.log(error);
+
+      res.status(500).json({
+        success: false,
+        message: "Server Error",
+      });
+
     }
+  };
 
-    res.status(200).json({
-      success: true,
-      data: certificate,
-    });
 
-  } catch (error) {
+// UPDATE CERTIFICATE
+export const updateCertificate =
+  async (req, res) => {
 
-    console.log(error);
+    try {
 
-    res.status(500).json({
-      success: false,
-      message: "Server Error",
-    });
+      const updatedCertificate =
+        await Certificate.findByIdAndUpdate(
 
-  }
-};
+          req.params.id,
+
+          req.body,
+
+          {
+            new: true,
+          }
+
+        );
+
+      res.status(200).json({
+
+        success: true,
+
+        message:
+          "Certificate updated successfully",
+
+        data: updatedCertificate,
+
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+      res.status(500).json({
+        success: false,
+        message: "Server Error",
+      });
+
+    }
+  };
+
+
+// DELETE CERTIFICATE
+export const deleteCertificate =
+  async (req, res) => {
+
+    try {
+
+      await Certificate.findByIdAndDelete(
+        req.params.id
+      );
+
+      res.status(200).json({
+
+        success: true,
+
+        message:
+          "Certificate deleted",
+
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+      res.status(500).json({
+        success: false,
+        message: "Server Error",
+      });
+
+    }
+  };
