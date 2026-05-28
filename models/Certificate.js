@@ -26,6 +26,10 @@ const certificateSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    courseIssueDate: {
+  type: String,
+  required: true,
+},
 
     duration: {
       type: String,

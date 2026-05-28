@@ -9,8 +9,10 @@ export const addCertificate = async (req, res) => {
     const {
       studentName,
       fatherName,
+      nameType,
       enrollmentNumber,
       course,
+      courseIssueDate,
       duration,
       internship,
       internshipDuration,
@@ -39,9 +41,13 @@ export const addCertificate = async (req, res) => {
 
         fatherName,
 
+        nameType,
+
         enrollmentNumber,
 
         course,
+
+        courseIssueDate,
 
         duration,
 
