@@ -7,15 +7,6 @@ const certificateSchema = new mongoose.Schema(
       required: true,
     },
 
-    fatherName: {
-      type: String,
-      required: true,
-    },
-    nameType: {
-      type: String,
-      default: "Father",
-    },
-
     enrollmentNumber: {
       type: String,
       required: true,
@@ -27,9 +18,9 @@ const certificateSchema = new mongoose.Schema(
       required: true,
     },
     courseIssueDate: {
-  type: String,
-  required: true,
-},
+      type: String,
+      required: true,
+    },
 
     duration: {
       type: String,

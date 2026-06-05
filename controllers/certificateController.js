@@ -8,8 +8,6 @@ export const addCertificate = async (req, res) => {
 
     const {
       studentName,
-      fatherName,
-      nameType,
       enrollmentNumber,
       course,
       courseIssueDate,
@@ -38,10 +36,6 @@ export const addCertificate = async (req, res) => {
       await Certificate.create({
 
         studentName,
-
-        fatherName,
-
-        nameType,
 
         enrollmentNumber,
 
