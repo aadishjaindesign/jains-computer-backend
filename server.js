@@ -16,30 +16,14 @@ connectDB();
 
 const app = express();
 
-const allowedOrigins = [
-  "https://jainscomputer.com",
-  "https://www.jainscomputer.com",
-  "http://localhost:3000"
-];
-
+// 🔐 security + limit
 app.use(express.json({ limit: "10kb" }));
+app.use(helmet()); 
 
-// ✅ SAHI - dynamic origin
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.header("Access-Control-Allow-Origin", origin);
-  }
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
-  if (req.method === "OPTIONS") return res.status(200).end();
-  next();
-});
-
-app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
-app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
+app.use(cors({
+  origin: "*",
+}));
 
 // 📝 request log
 app.use((req, res, next) => {
