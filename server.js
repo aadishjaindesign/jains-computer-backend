@@ -18,17 +18,21 @@ const app = express();
 
 // 🔐 security + limit
 app.use(express.json({ limit: "10kb" }));
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" }
-}));
 
-app.use(express.json());
+
+
 app.use(cors({
   origin: ["https://jainscomputer.com", "https://www.jainscomputer.com"],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }));
+
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
+
+app.use(express.json());
 
 // 📝 request log
 app.use((req, res, next) => {
