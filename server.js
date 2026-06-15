@@ -19,19 +19,22 @@ const app = express();
 // 🔐 security + limit
 app.use(express.json({ limit: "10kb" }));
 
+// Manual CORS - sabse pehle
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://jainscomputer.com");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  if (req.method === "OPTIONS") return res.status(200).end();
+  next();
+});
 
-
+app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
 app.use(cors({
-  origin: ["https://jainscomputer.com", "https://www.jainscomputer.com"],
+  origin: ["https://jainscomputer.com"],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
-}));
-
-app.options(/.*/, cors());
-
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 
 app.use(express.json());
